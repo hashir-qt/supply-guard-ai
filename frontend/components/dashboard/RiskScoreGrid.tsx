@@ -27,7 +27,7 @@ export function RiskScoreGrid() {
         external: data.overall_health_score * 1.05,
     }
 
-    const categoryTrends = {
+    const categoryTrends: Record<string, 'improving' | 'stable' | 'degrading'> = {
         supplier: data.active_risks > 5 ? 'degrading' : 'stable',
         logistics: 'stable',
         demand: 'improving',

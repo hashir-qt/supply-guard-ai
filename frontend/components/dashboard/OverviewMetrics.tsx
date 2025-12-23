@@ -28,7 +28,7 @@ export function OverviewMetrics() {
         },
         {
             label: 'Active Alerts',
-            value: data.total_active_risks,
+            value: data.active_risks,
             icon: Activity,
             color: 'text-orange-400',
             bg: 'bg-orange-500/10'

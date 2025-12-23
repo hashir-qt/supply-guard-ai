@@ -16,6 +16,8 @@ def get_overview(data: DataService = Depends(get_data_service)):
         total_suppliers=metrics["total_suppliers"],
         total_outlets=metrics["total_outlets"],
         active_risks=metrics["active_risks"],
+        outlets_at_risk=metrics["outlets_at_risk"],
+        active_deliveries=metrics["active_deliveries"],
         overall_health_score=metrics["overall_health_score"],
         critical_alerts=metrics["critical_alerts"]
     )

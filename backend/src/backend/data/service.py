@@ -45,10 +45,19 @@ class DataService:
         deduction = sum(r.risk_score * 0.1 for r in risks)
         health_score = max(0, min(100, base_score - deduction))
         
+        # Calculate at-risk outlets
+        outlets_at_risk = sum(1 for o in outlets if o.current_risk_score > 50)
+        
+        # Get active deliveries (mocked for now as routes logic might be simple)
+        routes = self.get_routes()
+        active_deliveries = sum(1 for r in routes if r.current_status in ["on_route", "scheduled"])
+
         return {
             "total_suppliers": len(suppliers),
             "total_outlets": len(outlets),
             "active_risks": len(risks),
             "critical_alerts": critical_alerts,
-            "overall_health_score": round(health_score, 1)
+            "overall_health_score": round(health_score, 1),
+            "outlets_at_risk": outlets_at_risk,
+            "active_deliveries": active_deliveries
         }

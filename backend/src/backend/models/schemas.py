@@ -159,6 +159,8 @@ class SupplyChainOverview(SQLModel):
     total_suppliers: int
     total_outlets: int
     active_risks: int
+    outlets_at_risk: int
+    active_deliveries: int
     overall_health_score: float
     critical_alerts: int
 

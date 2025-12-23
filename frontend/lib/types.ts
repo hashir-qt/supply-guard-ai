@@ -13,6 +13,8 @@ export interface SupplyChainOverview {
     total_suppliers: number
     total_outlets: number
     active_risks: number
+    outlets_at_risk: number
+    active_deliveries: number
     overall_health_score: number
     critical_alerts: number
 }
