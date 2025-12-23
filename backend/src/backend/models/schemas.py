@@ -100,6 +100,22 @@ class Outlet(SQLModel, table=True):
     last_delivery: Optional[datetime] = None
     next_delivery: Optional[datetime] = None
 
+    @property
+    def current_risk_score(self) -> float:
+        """Calculates risk score based on inventory levels."""
+        if not self.inventory:
+            return 50.0
+        
+        days = self.inventory.get("chicken_days_remaining", 5.0)
+        if days < 2.0:
+            return 85.0
+        elif days < 3.0:
+            return 65.0
+        elif days < 4.0:
+            return 45.0
+        else:
+            return 25.0
+
 class DeliveryRoute(SQLModel, table=True):
     route_id: str = Field(primary_key=True)
     name: str
