@@ -61,3 +61,6 @@ class DataService:
             "outlets_at_risk": outlets_at_risk,
             "active_deliveries": active_deliveries
         }
+
+data = DataService(Session)
+print(data.get_metric_summary())

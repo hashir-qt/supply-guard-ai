@@ -9,7 +9,7 @@ router = APIRouter()
 def get_data_service(session: Session = Depends(get_session)) -> DataService:
     return DataService(session)
 
-@router.get("/overview", response_model=SupplyChainOverview)
+@router.get("/", response_model=SupplyChainOverview)
 def get_overview(data: DataService = Depends(get_data_service)):
     metrics = data.get_metric_summary()
     return SupplyChainOverview(

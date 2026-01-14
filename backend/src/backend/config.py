@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     
     # OpenAI - Direct API Key
     OPENAI_API_KEY: str
-    OPENAI_MODEL: str = "gpt-4o"
+    OPENAI_MODEL: str = "gpt-4o-mini"
     
     # Neon PostgreSQL Database
     DATABASE_URL: str
