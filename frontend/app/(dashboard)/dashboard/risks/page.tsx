@@ -1,6 +1,18 @@
+'use client'
+import { useState } from 'react'
 import { AlertsTable } from '@/components/risks/AlertsTable'
+import { RiskDetailModal } from '@/components/risks/RiskDetailModal'
+import { Risk } from '@/lib/types'
 
 export default function RisksPage() {
+    const [selectedRisk, setSelectedRisk] = useState<Risk | null>(null)
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const handleViewDetails = (risk: Risk) => {
+        setSelectedRisk(risk)
+        setModalOpen(true)
+    }
+
     return (
         <div className="space-y-6">
             <div>
@@ -12,8 +24,14 @@ export default function RisksPage() {
                 <div className="p-6 border-b border-border">
                     <h2 className="font-semibold text-lg">All Risks</h2>
                 </div>
-                <AlertsTable />
+                <AlertsTable onViewDetails={handleViewDetails} />
             </div>
+
+            <RiskDetailModal
+                risk={selectedRisk}
+                open={modalOpen}
+                onOpenChange={setModalOpen}
+            />
         </div>
     )
 }

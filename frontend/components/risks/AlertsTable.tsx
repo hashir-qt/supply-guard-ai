@@ -4,9 +4,16 @@ import { api } from '@/lib/api'
 import { SeverityBadge } from './SeverityBadge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Risk } from '@/lib/types'
+import { Eye } from 'lucide-react'
 
-export function AlertsTable({ limit }: { limit?: number }) {
+interface AlertsTableProps {
+    limit?: number
+    onViewDetails?: (risk: Risk) => void
+}
+
+export function AlertsTable({ limit, onViewDetails }: AlertsTableProps) {
     const [alerts, setAlerts] = useState<Risk[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -37,6 +44,7 @@ export function AlertsTable({ limit }: { limit?: number }) {
                     <TableHead>Category</TableHead>
                     <TableHead>Impact</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead className="w-[100px]">Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -57,6 +65,20 @@ export function AlertsTable({ limit }: { limit?: number }) {
                             ) : '-'}
                         </TableCell>
                         <TableCell><Badge>{alert.status}</Badge></TableCell>
+                        <TableCell>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    onViewDetails?.(alert)
+                                }}
+                                className="gap-1"
+                            >
+                                <Eye className="w-4 h-4" />
+                                View
+                            </Button>
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>

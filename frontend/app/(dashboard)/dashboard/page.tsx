@@ -1,10 +1,22 @@
-import { Suspense } from 'react'
+'use client'
+import { Suspense, useState } from 'react'
 import { OverviewMetrics } from '@/components/dashboard/OverviewMetrics'
 import { RiskScoreGrid } from '@/components/dashboard/RiskScoreGrid'
 import { AlertsTable } from '@/components/risks/AlertsTable'
+import { RiskDetailModal } from '@/components/risks/RiskDetailModal'
 import { AgentChat } from '@/components/chat/AgentChat'
+import { Risk } from '@/lib/types'
+import Link from 'next/link'
 
 export default function DashboardPage() {
+    const [selectedRisk, setSelectedRisk] = useState<Risk | null>(null)
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const handleViewDetails = (risk: Risk) => {
+        setSelectedRisk(risk)
+        setModalOpen(true)
+    }
+
     return (
         <div className="space-y-6">
             <div>
@@ -25,11 +37,13 @@ export default function DashboardPage() {
                     <div className="bg-card rounded-xl border border-border flex-1 overflow-hidden flex flex-col">
                         <div className="p-6 border-b border-border flex justify-between items-center">
                             <h2 className="font-semibold text-lg">Active Risk Alerts</h2>
-                            <button className="text-sm text-blue-400 hover:text-blue-300">View All</button>
+                            <Link href="/dashboard/risks" className="text-sm text-blue-400 hover:text-blue-300">
+                                View All
+                            </Link>
                         </div>
                         <div className="flex-1 overflow-auto">
                             <Suspense fallback={<div>Loading alerts...</div>}>
-                                <AlertsTable limit={10} />
+                                <AlertsTable limit={10} onViewDetails={handleViewDetails} />
                             </Suspense>
                         </div>
                     </div>
@@ -39,6 +53,12 @@ export default function DashboardPage() {
                     <AgentChat />
                 </div>
             </div>
+
+            <RiskDetailModal
+                risk={selectedRisk}
+                open={modalOpen}
+                onOpenChange={setModalOpen}
+            />
         </div>
     )
 }
